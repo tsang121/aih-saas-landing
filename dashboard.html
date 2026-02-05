@@ -6,7 +6,7 @@
     <title>Dashboard - AIH</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Dashboard Specific Styles */
+        /* Dashboard Styles */
         .dashboard-layout {
             display: flex;
             min-height: 100vh;
@@ -16,7 +16,7 @@
         .dashboard-sidebar {
             width: 260px;
             background: rgba(30, 41, 59, 0.5);
-            border-right: 1px solid var(--card-border);
+            border-right: 1px solid rgba(148, 163, 184, 0.1);
             padding: 30px 20px;
             position: fixed;
             height: calc(100vh - 70px);
@@ -26,22 +26,18 @@
         .sidebar-logo {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--light);
+            color: #f8fafc;
             margin-bottom: 40px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
         
-        .sidebar-logo span { color: var(--primary); }
+        .sidebar-logo span { color: #22c55e; }
         
-        .sidebar-nav {
-            list-style: none;
-        }
+        .sidebar-nav { list-style: none; }
         
-        .sidebar-nav li {
-            margin-bottom: 8px;
-        }
+        .sidebar-nav li { margin-bottom: 8px; }
         
         .sidebar-nav a {
             display: flex;
@@ -49,15 +45,16 @@
             gap: 12px;
             padding: 14px 16px;
             border-radius: 12px;
-            color: var(--gray);
+            color: #94a3b8;
             text-decoration: none;
             transition: all 0.2s;
+            cursor: pointer;
         }
         
         .sidebar-nav a:hover,
         .sidebar-nav a.active {
             background: rgba(34, 197, 94, 0.1);
-            color: var(--primary);
+            color: #22c55e;
         }
         
         .sidebar-nav .icon { font-size: 1.2rem; }
@@ -65,22 +62,49 @@
         .sidebar-section {
             margin-top: 40px;
             padding-top: 20px;
-            border-top: 1px solid var(--card-border);
+            border-top: 1px solid rgba(148, 163, 184, 0.1);
         }
         
         .sidebar-section-title {
             font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            color: var(--gray);
+            color: #94a3b8;
             margin-bottom: 16px;
             padding-left: 16px;
+        }
+        
+        .storage-bar {
+            padding: 0 16px;
+            margin-top: 20px;
+        }
+        
+        .storage-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin-bottom: 8px;
+        }
+        
+        .storage-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            height: 8px;
+            overflow: hidden;
+        }
+        
+        .storage-fill {
+            background: #22c55e;
+            height: 100%;
+            border-radius: 8px;
+            width: 35%;
         }
         
         .sidebar-user {
             margin-top: auto;
             padding-top: 20px;
-            border-top: 1px solid var(--card-border);
+            border-top: 1px solid rgba(148, 163, 184, 0.1);
         }
         
         .sidebar-user-info {
@@ -95,7 +119,7 @@
         .sidebar-user-avatar {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            background: linear-gradient(135deg, #22c55e, #4ade80);
             border-radius: 10px;
             display: flex;
             align-items: center;
@@ -111,7 +135,7 @@
         
         .sidebar-user-email {
             font-size: 0.8rem;
-            color: var(--gray);
+            color: #94a3b8;
         }
         
         .dashboard-main {
@@ -133,34 +157,30 @@
         }
         
         .dashboard-subtitle {
-            color: var(--gray);
+            color: #94a3b8;
             margin-top: 4px;
         }
         
-        .dashboard-actions {
-            display: flex;
-            gap: 12px;
-        }
-        
-        .btn-new-backup {
-            background: var(--primary);
+        .btn-primary {
+            background: #22c55e;
             color: white;
             padding: 12px 24px;
             border-radius: 12px;
             text-decoration: none;
             font-weight: 600;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 8px;
+            border: none;
+            cursor: pointer;
             transition: all 0.2s;
         }
         
-        .btn-new-backup:hover {
-            background: var(--primary-dark);
+        .btn-primary:hover {
+            background: #16a34a;
             transform: translateY(-2px);
         }
         
-        /* Stats Cards */
         .dashboard-stats {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -169,16 +189,10 @@
         }
         
         .dashboard-stat {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(148, 163, 184, 0.1);
             border-radius: 16px;
             padding: 24px;
-            transition: all 0.2s;
-        }
-        
-        .dashboard-stat:hover {
-            transform: translateY(-2px);
-            border-color: var(--primary);
         }
         
         .dashboard-stat-icon {
@@ -196,18 +210,13 @@
         .dashboard-stat-value {
             font-size: 2rem;
             font-weight: 700;
-            color: var(--primary);
+            color: #22c55e;
         }
         
         .dashboard-stat-label {
-            color: var(--gray);
+            color: #94a3b8;
             font-size: 0.9rem;
             margin-top: 4px;
-        }
-        
-        /* Section */
-        .dashboard-section {
-            margin-bottom: 40px;
         }
         
         .section-title {
@@ -219,22 +228,25 @@
             gap: 12px;
         }
         
-        /* Backup List */
+        .dashboard-section {
+            margin-bottom: 40px;
+        }
+        
         .backup-list-container {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(148, 163, 184, 0.1);
             border-radius: 16px;
             overflow: hidden;
         }
         
         .backup-list-header {
             display: grid;
-            grid-template-columns: 1fr 150px 150px 120px;
+            grid-template-columns: 1fr 150px 150px 120px 100px;
             padding: 16px 24px;
             background: rgba(255, 255, 255, 0.02);
-            border-bottom: 1px solid var(--card-border);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
             font-weight: 600;
-            color: var(--gray);
+            color: #94a3b8;
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -242,19 +254,16 @@
         
         .backup-item-row {
             display: grid;
-            grid-template-columns: 1fr 150px 150px 120px;
+            grid-template-columns: 1fr 150px 150px 120px 100px;
             padding: 20px 24px;
-            border-bottom: 1px solid var(--card-border);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
             align-items: center;
-            transition: all 0.2s;
         }
+        
+        .backup-item-row:last-child { border-bottom: none; }
         
         .backup-item-row:hover {
             background: rgba(34, 197, 94, 0.03);
-        }
-        
-        .backup-item-row:last-child {
-            border-bottom: none;
         }
         
         .backup-item-info {
@@ -280,12 +289,12 @@
         
         .backup-item-date {
             font-size: 0.9rem;
-            color: var(--gray);
+            color: #94a3b8;
         }
         
         .backup-item-size {
             font-size: 0.9rem;
-            color: var(--gray);
+            color: #94a3b8;
         }
         
         .backup-status {
@@ -298,17 +307,7 @@
         
         .backup-status.success {
             background: rgba(34, 197, 94, 0.15);
-            color: var(--primary);
-        }
-        
-        .backup-status.pending {
-            background: rgba(251, 191, 36, 0.15);
-            color: #fbbf24;
-        }
-        
-        .backup-status.failed {
-            background: rgba(239, 68, 68, 0.15);
-            color: #ef4444;
+            color: #22c55e;
         }
         
         .backup-actions {
@@ -320,9 +319,9 @@
             width: 36px;
             height: 36px;
             border-radius: 8px;
-            border: 1px solid var(--card-border);
+            border: 1px solid rgba(148, 163, 184, 0.2);
             background: transparent;
-            color: var(--gray);
+            color: #94a3b8;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -331,15 +330,15 @@
         }
         
         .btn-icon:hover {
-            border-color: var(--primary);
-            color: var(--primary);
+            border-color: #22c55e;
+            color: #22c55e;
             background: rgba(34, 197, 94, 0.05);
         }
         
         .btn-icon.restore:hover {
             background: rgba(34, 197, 94, 0.1);
-            color: var(--primary);
-            border-color: var(--primary);
+            color: #22c55e;
+            border-color: #22c55e;
         }
         
         .btn-icon.delete:hover {
@@ -348,62 +347,6 @@
             border-color: #ef4444;
         }
         
-        /* Schedule */
-        .schedule-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-        
-        .schedule-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 24px;
-        }
-        
-        .schedule-card h4 {
-            font-size: 1rem;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .schedule-option {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-bottom: 8px;
-        }
-        
-        .schedule-option:hover {
-            background: rgba(34, 197, 94, 0.05);
-        }
-        
-        .schedule-option input[type="radio"] {
-            accent-color: var(--primary);
-        }
-        
-        .schedule-option label {
-            flex: 1;
-            cursor: pointer;
-        }
-        
-        .schedule-option .frequency {
-            font-weight: 600;
-        }
-        
-        .schedule-option .time {
-            font-size: 0.85rem;
-            color: var(--gray);
-        }
-        
-        /* Quick Actions */
         .quick-actions {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -411,8 +354,8 @@
         }
         
         .quick-action {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(148, 163, 184, 0.1);
             border-radius: 14px;
             padding: 24px;
             text-align: center;
@@ -422,7 +365,7 @@
         
         .quick-action:hover {
             transform: translateY(-2px);
-            border-color: var(--primary);
+            border-color: #22c55e;
         }
         
         .quick-action-icon {
@@ -437,32 +380,17 @@
         
         .quick-action p {
             font-size: 0.85rem;
-            color: var(--gray);
+            color: #94a3b8;
         }
         
-        /* Responsive */
         @media (max-width: 1200px) {
-            .dashboard-stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .schedule-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .quick-actions {
-                grid-template-columns: repeat(2, 1fr);
-            }
+            .dashboard-stats { grid-template-columns: repeat(2, 1fr); }
+            .quick-actions { grid-template-columns: repeat(2, 1fr); }
         }
         
         @media (max-width: 900px) {
-            .dashboard-sidebar {
-                display: none;
-            }
-            
-            .dashboard-main {
-                margin-left: 0;
-            }
+            .dashboard-sidebar { display: none; }
+            .dashboard-main { margin-left: 0; }
         }
     </style>
 </head>
@@ -472,11 +400,9 @@
         <div class="container">
             <a href="index.html" class="logo">🤖 <span>AIH</span></a>
             <div class="nav-links">
-                <a href="#features">Features</a>
-                <a href="#how-it-works">How It Works</a>
-                <a href="#testimonials">Reviews</a>
-                <a href="#pricing">Pricing</a>
-                <a href="#faq">FAQ</a>
+                <a href="index.html">Home</a>
+                <a href="index.html#features">Features</a>
+                <a href="index.html#pricing">Pricing</a>
             </div>
             <div class="nav-auth" id="navAuth">
                 <button class="btn-auth-login" onclick="logout()">Log Out</button>
@@ -484,28 +410,26 @@
         </div>
     </nav>
     
-    <div class="dashboard-layout" id="dashboardContent">
+    <div class="dashboard-layout">
         <!-- Sidebar -->
         <aside class="dashboard-sidebar">
             <div class="sidebar-logo">🤖 <span>AIH</span></div>
             
             <ul class="sidebar-nav">
-                <li><a href="#" class="active"><span class="icon">📊</span> Dashboard</a></li>
-                <li><a href="#"><span class="icon">💾</span> Backups</a></li>
-                <li><a href="#"><span class="icon">🔄</span> Restore</a></li>
-                <li><a href="#"><span class="icon">📅</span> Schedule</a></li>
-                <li><a href="#"><span class="icon">⚙️</span> Settings</a></li>
+                <li><a href="#" class="active" onclick="showSection('dashboard')"><span class="icon">📊</span> Dashboard</a></li>
+                <li><a href="#" onclick="showSection('backups')"><span class="icon">💾</span> Backups</a></li>
+                <li><a href="#" onclick="showSection('settings')"><span class="icon">⚙️</span> Settings</a></li>
             </ul>
             
             <div class="sidebar-section">
                 <div class="sidebar-section-title">Storage</div>
-                <div style="padding: 0 16px;">
-                    <div style="background: rgba(255,255,255,0.1); border-radius: 8px; height: 8px; margin-bottom: 8px;">
-                        <div style="background: var(--primary); width: 35%; height: 100%; border-radius: 8px;"></div>
+                <div class="storage-bar">
+                    <div class="storage-label">
+                        <span id="storageUsed">350 MB</span>
+                        <span>1 GB</span>
                     </div>
-                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--gray);">
-                        <span>350 MB used</span>
-                        <span>1 GB total</span>
+                    <div class="storage-track">
+                        <div class="storage-fill" id="storageBar"></div>
                     </div>
                 </div>
             </div>
@@ -523,184 +447,131 @@
         
         <!-- Main Content -->
         <main class="dashboard-main">
-            <div class="dashboard-header">
-                <div>
-                    <h1 class="dashboard-title">Dashboard</h1>
-                    <p class="dashboard-subtitle">Welcome back! Here's your backup overview.</p>
-                </div>
-                <div class="dashboard-actions">
-                    <a href="#" class="btn-new-backup">💾 New Backup</a>
-                </div>
-            </div>
-            
-            <!-- Stats -->
-            <div class="dashboard-stats">
-                <div class="dashboard-stat">
-                    <div class="dashboard-stat-icon">💾</div>
-                    <div class="dashboard-stat-value">12</div>
-                    <div class="dashboard-stat-label">Total Backups</div>
-                </div>
-                <div class="dashboard-stat">
-                    <div class="dashboard-stat-icon">📦</div>
-                    <div class="dashboard-stat-value">350 MB</div>
-                    <div class="dashboard-stat-label">Storage Used</div>
-                </div>
-                <div class="dashboard-stat">
-                    <div class="dashboard-stat-icon">🕐</div>
-                    <div class="dashboard-stat-value">Today</div>
-                    <div class="dashboard-stat-label">Last Backup</div>
-                </div>
-                <div class="dashboard-stat">
-                    <div class="dashboard-stat-icon">✅</div>
-                    <div class="dashboard-stat-value">100%</div>
-                    <div class="dashboard-stat-label">Success Rate</div>
-                </div>
-            </div>
-            
-            <!-- Quick Actions -->
-            <div class="dashboard-section">
-                <h2 class="section-title">⚡ Quick Actions</h2>
-                <div class="quick-actions">
-                    <div class="quick-action">
-                        <div class="quick-action-icon">💾</div>
-                        <h4>Backup Now</h4>
-                        <p>Create instant backup</p>
+            <!-- Dashboard Section -->
+            <div id="section-dashboard">
+                <div class="dashboard-header">
+                    <div>
+                        <h1 class="dashboard-title">Dashboard</h1>
+                        <p class="dashboard-subtitle">Welcome back! Here's your backup overview.</p>
                     </div>
-                    <div class="quick-action">
-                        <div class="quick-action-icon">🔄</div>
-                        <h4>Restore</h4>
-                        <p>Restore from backup</p>
+                    <button class="btn-primary" onclick="createBackup()">💾 New Backup</button>
+                </div>
+                
+                <!-- Stats -->
+                <div class="dashboard-stats">
+                    <div class="dashboard-stat">
+                        <div class="dashboard-stat-icon">💾</div>
+                        <div class="dashboard-stat-value" id="statBackups">12</div>
+                        <div class="dashboard-stat-label">Total Backups</div>
                     </div>
-                    <div class="quick-action">
-                        <div class="quick-action-icon">📤</div>
-                        <h4>Export</h4>
-                        <p>Download backups</p>
+                    <div class="dashboard-stat">
+                        <div class="dashboard-stat-icon">📦</div>
+                        <div class="dashboard-stat-value" id="statStorage">350 MB</div>
+                        <div class="dashboard-stat-label">Storage Used</div>
                     </div>
-                    <div class="quick-action">
-                        <div class="quick-action-icon">⚙️</div>
-                        <h4>Settings</h4>
-                        <p>Configure backup</p>
+                    <div class="dashboard-stat">
+                        <div class="dashboard-stat-icon">🕐</div>
+                        <div class="dashboard-stat-value" id="statLastBackup">Today</div>
+                        <div class="dashboard-stat-label">Last Backup</div>
+                    </div>
+                    <div class="dashboard-stat">
+                        <div class="dashboard-stat-icon">✅</div>
+                        <div class="dashboard-stat-value">100%</div>
+                        <div class="dashboard-stat-label">Success Rate</div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Backup List -->
-            <div class="dashboard-section">
-                <h2 class="section-title">💾 Recent Backups</h2>
-                <div class="backup-list-container">
-                    <div class="backup-list-header">
-                        <span>Name</span>
-                        <span>Date</span>
-                        <span>Size</span>
-                        <span>Status</span>
-                    </div>
-                    
-                    <div class="backup-item-row">
-                        <div class="backup-item-info">
-                            <div class="backup-item-icon">💾</div>
-                            <div>
-                                <div class="backup-item-name">OpenClaw Daily</div>
-                                <div class="backup-item-date">Today, 2:30 PM</div>
-                            </div>
+                
+                <!-- Quick Actions -->
+                <div class="dashboard-section">
+                    <h2 class="section-title">⚡ Quick Actions</h2>
+                    <div class="quick-actions">
+                        <div class="quick-action" onclick="createBackup()">
+                            <div class="quick-action-icon">💾</div>
+                            <h4>Backup Now</h4>
+                            <p>Create instant backup</p>
                         </div>
-                        <div class="backup-item-date">Today, 2:30 PM</div>
-                        <div class="backup-item-size">45 MB</div>
-                        <div class="backup-status success">✓ Success</div>
-                    </div>
-                    
-                    <div class="backup-item-row">
-                        <div class="backup-item-info">
-                            <div class="backup-item-icon">💾</div>
-                            <div>
-                                <div class="backup-item-name">Memory Files</div>
-                                <div class="backup-item-date">Today, 10:00 AM</div>
-                            </div>
+                        <div class="quick-action" onclick="showSection('backups')">
+                            <div class="quick-action-icon">🔄</div>
+                            <h4>Restore</h4>
+                            <p>Restore from backup</p>
                         </div>
-                        <div class="backup-item-date">Today, 10:00 AM</div>
-                        <div class="backup-item-size">12 MB</div>
-                        <div class="backup-status success">✓ Success</div>
-                    </div>
-                    
-                    <div class="backup-item-row">
-                        <div class="backup-item-info">
-                            <div class="backup-item-icon">💾</div>
-                            <div>
-                                <div class="backup-item-name">Configuration</div>
-                                <div class="backup-item-date">Yesterday</div>
-                            </div>
+                        <div class="quick-action">
+                            <div class="quick-action-icon">📤</div>
+                            <h4>Export</h4>
+                            <p>Download backups</p>
                         </div>
-                        <div class="backup-item-date">Yesterday</div>
-                        <div class="backup-item-size">3 MB</div>
-                        <div class="backup-status success">✓ Success</div>
-                    </div>
-                    
-                    <div class="backup-item-row">
-                        <div class="backup-item-info">
-                            <div class="backup-item-icon">💾</div>
-                            <div>
-                                <div class="backup-item-name">Full System</div>
-                                <div class="backup-item-date">Feb 3, 2026</div>
-                            </div>
+                        <div class="quick-action" onclick="showSection('settings')">
+                            <div class="quick-action-icon">⚙️</div>
+                            <h4>Settings</h4>
+                            <p>Configure backup</p>
                         </div>
-                        <div class="backup-item-date">Feb 3, 2026</div>
-                        <div class="backup-item-size">290 MB</div>
-                        <div class="backup-status success">✓ Success</div>
+                    </div>
+                </div>
+                
+                <!-- Recent Backups -->
+                <div class="dashboard-section">
+                    <h2 class="section-title">💾 Recent Backups</h2>
+                    <div class="backup-list-container">
+                        <div class="backup-list-header">
+                            <span>Name</span>
+                            <span>Date</span>
+                            <span>Size</span>
+                            <span>Status</span>
+                            <span>Actions</span>
+                        </div>
+                        <div id="backupList">
+                            <!-- Backups will be rendered here -->
+                        </div>
                     </div>
                 </div>
             </div>
             
-            <!-- Schedule -->
-            <div class="dashboard-section">
-                <h2 class="section-title">📅 Backup Schedule</h2>
-                <div class="schedule-grid">
-                    <div class="schedule-card">
-                        <h4>📊 Daily Backup</h4>
-                        <div class="schedule-option">
-                            <input type="radio" name="daily" id="daily-on" checked>
-                            <label for="daily-on">
-                                <div class="frequency">Every Day</div>
-                                <div class="time">3:00 AM</div>
-                            </label>
-                        </div>
-                        <div class="schedule-option">
-                            <input type="radio" name="daily" id="daily-off">
-                            <label for="daily-off">
-                                <div class="frequency">Disabled</div>
-                            </label>
-                        </div>
+            <!-- Settings Section -->
+            <div id="section-settings" style="display: none;">
+                <div class="dashboard-header">
+                    <div>
+                        <h1 class="dashboard-title">Settings</h1>
+                        <p class="dashboard-subtitle">Configure your backup preferences</p>
                     </div>
-                    
-                    <div class="schedule-card">
-                        <h4>📆 Weekly Backup</h4>
-                        <div class="schedule-option">
-                            <input type="radio" name="weekly" id="weekly-on" checked>
-                            <label for="weekly-on">
-                                <div class="frequency">Every Sunday</div>
-                                <div class="time">2:00 AM</div>
-                            </label>
+                </div>
+                
+                <div class="dashboard-section">
+                    <h2 class="section-title">🔑 API Key</h2>
+                    <div class="backup-list-container" style="padding: 24px;">
+                        <p style="color: #94a3b8; margin-bottom: 16px;">Use this API key to connect your AI assistant:</p>
+                        <div style="background: rgba(0,0,0,0.3); padding: 16px; border-radius: 10px; font-family: monospace; margin-bottom: 16px;" id="apiKey">
+                            Loading...
                         </div>
-                        <div class="schedule-option">
-                            <input type="radio" name="weekly" id="weekly-off">
-                            <label for="weekly-off">
-                                <div class="frequency">Disabled</div>
-                            </label>
-                        </div>
+                        <button class="btn-primary" onclick="regenerateKey()">🔄 Regenerate Key</button>
                     </div>
-                    
-                    <div class="schedule-card">
-                        <h4>🕐 Hourly Backup</h4>
-                        <div class="schedule-option">
-                            <input type="radio" name="hourly" id="hourly-on">
-                            <label for="hourly-on">
-                                <div class="frequency">Every Hour</div>
-                                <div class="time">Pro feature</div>
-                            </label>
+                </div>
+                
+                <div class="dashboard-section">
+                    <h2 class="section-title">📅 Schedule</h2>
+                    <div class="quick-actions" style="grid-template-columns: repeat(3, 1fr);">
+                        <div class="quick-action">
+                            <h4>📊 Daily</h4>
+                            <p style="margin-top: 8px;">
+                                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                    <input type="checkbox" id="dailyEnabled" checked> Enable Daily Backup
+                                </label>
+                            </p>
                         </div>
-                        <div class="schedule-option">
-                            <input type="radio" name="hourly" id="hourly-off" checked>
-                            <label for="hourly-off">
-                                <div class="frequency">Disabled</div>
-                            </label>
+                        <div class="quick-action">
+                            <h4>📆 Weekly</h4>
+                            <p style="margin-top: 8px;">
+                                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                    <input type="checkbox" id="weeklyEnabled" checked> Enable Weekly Backup
+                                </label>
+                            </p>
+                        </div>
+                        <div class="quick-action">
+                            <h4>🕐 Hourly</h4>
+                            <p style="margin-top: 8px;">
+                                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                    <input type="checkbox" id="hourlyEnabled"> Pro Feature
+                                </label>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -725,15 +596,17 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         
-        // Check localStorage first (set by landing page)
-        function checkLocalStorageAuth() {
+        let currentUser = null;
+        
+        // Check localStorage first
+        function checkAuth() {
             const savedUser = localStorage.getItem('aih_currentUser');
             if (savedUser) {
                 const user = JSON.parse(savedUser);
-                if (user && user.email) {
-                    displayUserInfo(user);
-                    return true;
-                }
+                displayUserInfo(user);
+                currentUser = user;
+                loadUserData(user);
+                return true;
             }
             return false;
         }
@@ -742,56 +615,166 @@
             const name = user.name || user.email.split('@')[0];
             const initial = name.substring(0, 2).toUpperCase();
             
-            if (document.getElementById('userName')) {
-                document.getElementById('userName').textContent = name;
+            document.getElementById('userName').textContent = name;
+            document.getElementById('userEmail').textContent = user.email;
+            document.getElementById('userAvatar').textContent = initial;
+        }
+        
+        function loadUserData(user) {
+            // Load user's API key
+            const userKeys = JSON.parse(localStorage.getItem('aih_api_keys') || '{}');
+            const apiKey = userKeys[user.email] || generateApiKey();
+            userKeys[user.email] = apiKey;
+            localStorage.setItem('aih_api_keys', JSON.stringify(userKeys));
+            document.getElementById('apiKey').textContent = apiKey;
+            
+            // Load backups
+            const userBackups = JSON.parse(localStorage.getItem('aih_backups_' + user.email) || '[]');
+            renderBackups(userBackups);
+            updateStats(userBackups);
+        }
+        
+        function generateApiKey() {
+            return 'aih_' + Math.random().toString(36).substring(2) + Date.now().toString(36);
+        }
+        
+        function renderBackups(backups) {
+            const container = document.getElementById('backupList');
+            if (backups.length === 0) {
+                container.innerHTML = '<div class="backup-item-row" style="text-align: center; color: #94a3b8; justify-content: center;">No backups yet. Click "New Backup" to create one!</div>';
+                return;
             }
-            if (document.getElementById('userEmail')) {
-                document.getElementById('userEmail').textContent = user.email;
-            }
-            if (document.getElementById('userAvatar')) {
-                document.getElementById('userAvatar').textContent = initial;
+            
+            container.innerHTML = backups.map(backup => `
+                <div class="backup-item-row">
+                    <div class="backup-item-info">
+                        <div class="backup-item-icon">💾</div>
+                        <div>
+                            <div class="backup-item-name">${backup.name}</div>
+                            <div class="backup-item-date">${backup.date}</div>
+                        </div>
+                    </div>
+                    <div class="backup-item-date">${backup.date}</div>
+                    <div class="backup-item-size">${backup.size}</div>
+                    <div class="backup-status success">✓ ${backup.status}</div>
+                    <div class="backup-actions">
+                        <button class="btn-icon restore" title="Restore" onclick="restoreBackup('${backup.id}')">🔄</button>
+                        <button class="btn-icon delete" title="Delete" onclick="deleteBackup('${backup.id}')">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function updateStats(backups) {
+            document.getElementById('statBackups').textContent = backups.length;
+            
+            const totalSize = backups.reduce((sum, b) => sum + parseInt(b.size), 0);
+            document.getElementById('statStorage').textContent = formatSize(totalSize);
+            document.getElementById('storageUsed').textContent = formatSize(totalSize);
+            document.getElementById('storageBar').style.width = Math.min(totalSize / 10, 100) + '%';
+            
+            if (backups.length > 0) {
+                document.getElementById('statLastBackup').textContent = backups[0].date.split(',')[0];
             }
         }
         
-        function showDashboard(user) {
-            // Hide login overlay, show dashboard
-            document.getElementById('dashboardContent').style.display = 'block';
+        function formatSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(0) + ' MB';
+            return (bytes / (1024 * 1024)).toFixed(1) + ' GB';
         }
         
-        function showLogin() {
-            // Redirect to landing page
-            window.location.href = 'index.html';
-        }
+        window.createBackup = function() {
+            if (!currentUser) return;
+            
+            const backup = {
+                id: Date.now().toString(),
+                name: 'OpenClaw Backup',
+                date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
+                size: Math.floor(Math.random() * 100 + 10) + ' MB',
+                status: 'Success'
+            };
+            
+            const userBackups = JSON.parse(localStorage.getItem('aih_backups_' + currentUser.email) || '[]');
+            userBackups.unshift(backup);
+            localStorage.setItem('aih_backups_' + currentUser.email, JSON.stringify(userBackups));
+            
+            renderBackups(userBackups);
+            updateStats(userBackups);
+            showNotification('Backup created successfully!');
+        };
         
-        // Initial check - check localStorage first
-        const hasLocalUser = checkLocalStorageAuth();
+        window.restoreBackup = function(backupId) {
+            showNotification('Restore feature coming soon!');
+        };
         
-        // If no local user, check Firebase
-        if (!hasLocalUser) {
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    displayUserInfo({
-                        name: user.displayName,
-                        email: user.email
-                    });
-                } else {
-                    // No Firebase user either, redirect to login
-                    showLogin();
-                }
-            });
+        window.deleteBackup = function(backupId) {
+            if (!confirm('Delete this backup?')) return;
+            
+            const userBackups = JSON.parse(localStorage.getItem('aih_backups_' + currentUser.email) || '[]');
+            const filtered = userBackups.filter(b => b.id !== backupId);
+            localStorage.setItem('aih_backups_' + currentUser.email, JSON.stringify(filtered));
+            
+            renderBackups(filtered);
+            updateStats(filtered);
+            showNotification('Backup deleted');
+        };
+        
+        window.regenerateKey = function() {
+            if (!confirm('Regenerate API key? Old key will stop working.')) return;
+            
+            const newKey = generateApiKey();
+            const userKeys = JSON.parse(localStorage.getItem('aih_api_keys') || '{}');
+            userKeys[currentUser.email] = newKey;
+            localStorage.setItem('aih_api_keys', JSON.stringify(userKeys));
+            document.getElementById('apiKey').textContent = newKey;
+            showNotification('New API key generated!');
+        };
+        
+        window.showSection = function(section) {
+            document.getElementById('section-dashboard').style.display = section === 'dashboard' ? 'block' : 'none';
+            document.getElementById('section-settings').style.display = section === 'settings' ? 'block' : 'none';
+            
+            document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+            event.target.closest('a').classList.add('active');
+        };
+        
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = 'position:fixed;bottom:24px;right:24px;padding:16px 24px;background:#22c55e;color:white;border-radius:12px;font-weight:600;z-index:3000';
+            document.body.appendChild(notification);
+            setTimeout(() => { notification.style.opacity=0; setTimeout(()=>notification.remove(),300); }, 3000);
         }
         
         window.logout = function() {
-            localStorage.removeItem('aih_currentUser');
-            
             signOut(auth).then(() => {
+                localStorage.removeItem('aih_currentUser');
                 window.location.href = 'index.html';
             }).catch(() => {
-                // Even if Firebase signout fails, redirect
+                localStorage.removeItem('aih_currentUser');
                 window.location.href = 'index.html';
             });
         };
+        
+        // Initialize
+        if (!checkAuth()) {
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    const userData = {
+                        uid: user.uid,
+                        email: user.email,
+                        name: user.displayName || user.email.split('@')[0]
+                    };
+                    localStorage.setItem('aih_currentUser', JSON.stringify(userData));
+                    displayUserInfo(userData);
+                    currentUser = userData;
+                    loadUserData(userData);
+                } else {
+                    window.location.href = 'index.html';
+                }
+            });
+        }
     </script>
-
 </body>
 </html>
