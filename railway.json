@@ -1,9 +1,0 @@
-{
-  "build": {
-    "builder": "NPM"
-  },
-  "deploy": {
-    "startCommand": "npx serve -s .",
-    "environment": "node"
-  }
-}

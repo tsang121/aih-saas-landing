@@ -4,11 +4,7 @@
   "description": "AIH SaaS Landing Page",
   "main": "index.html",
   "scripts": {
-    "start": "npx serve -s . -l 3000"
-  },
-  "dependencies": {},
-  "devDependencies": {
-    "serve": "^14.2.0"
+    "start": "npx serve -s ."
   },
   "engines": {
     "node": ">=16.0.0"
