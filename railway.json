@@ -1,8 +1,9 @@
-[build]
-builder = "npm"
-
-[build.environment]
-NODE_VERSION = "18"
-
-[[ports]]
-port = 3000
+{
+  "build": {
+    "builder": "NPM"
+  },
+  "deploy": {
+    "startCommand": "npx serve -s .",
+    "environment": "node"
+  }
+}
