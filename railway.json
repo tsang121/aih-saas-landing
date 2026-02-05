@@ -1,0 +1,8 @@
+[build]
+builder = "npm"
+
+[build.environment]
+NODE_VERSION = "18"
+
+[[ports]]
+port = 3000

@@ -4,9 +4,10 @@
   "description": "AIH SaaS Landing Page",
   "main": "index.html",
   "scripts": {
-    "start": "serve -s . -l $PORT"
+    "start": "npx serve -s . -l 3000"
   },
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "serve": "^14.2.0"
   },
   "engines": {
