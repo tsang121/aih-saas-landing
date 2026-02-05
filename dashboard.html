@@ -725,19 +725,39 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         
-        // Check auth
-        onAuthStateChanged(auth, (user) => {
-            if (!user) {
-                window.location.href = 'index.html';
-            } else {
-                document.getElementById('userName').textContent = user.displayName || user.email.split('@')[0];
+        // Check localStorage first (set by landing page)
+        function checkAuth() {
+            const savedUser = localStorage.getItem('aih_currentUser');
+            if (savedUser) {
+                const user = JSON.parse(savedUser);
+                document.getElementById('userName').textContent = user.name || user.email.split('@')[0];
                 document.getElementById('userEmail').textContent = user.email;
-                document.getElementById('userAvatar').textContent = (user.displayName || user.email).substring(0, 2).toUpperCase();
+                document.getElementById('userAvatar').textContent = (user.name || user.email).substring(0, 2).toUpperCase();
+                return true;
             }
-        });
+            return false;
+        }
+        
+        // Check localStorage first
+        if (!checkAuth()) {
+            // If no localStorage user, check Firebase
+            onAuthStateChanged(auth, (user) => {
+                if (!user) {
+                    window.location.href = 'index.html';
+                } else {
+                    document.getElementById('userName').textContent = user.displayName || user.email.split('@')[0];
+                    document.getElementById('userEmail').textContent = user.email;
+                    document.getElementById('userAvatar').textContent = (user.displayName || user.email).substring(0, 2).toUpperCase();
+                }
+            });
+        }
         
         window.logout = function() {
             signOut(auth).then(() => {
+                localStorage.removeItem('aih_currentUser');
+                window.location.href = 'index.html';
+            }).catch(() => {
+                // Even if Firebase signout fails, clear localStorage and redirect
                 localStorage.removeItem('aih_currentUser');
                 window.location.href = 'index.html';
             });
