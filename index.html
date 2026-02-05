@@ -5,6 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AIH - AI Assistant Backup Platform</title>
     <link rel="stylesheet" href="styles.css">
+<!-- Firebase SDK -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    
+    const firebaseConfig = {
+        apiKey: "AIzaSyDSNxqFkvOMrykLmPYzuKOXFZWNRNqbDZ8",
+        authDomain: "aih-claw.firebaseapp.com",
+        projectId: "aih-claw",
+        storageBucket: "aih-claw.firebasestorage.app",
+        messagingSenderId: "872653091447",
+        appId: "1:872653091447:web:e5e225a6357772dcde0c72",
+        measurementId: "G-ZMGL0DK836"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+</script>
+
 </head>
 <body>
     <!-- Navigation -->
@@ -579,26 +598,7 @@
             }
         }
         
-        // ============================================
-        // Firebase Authentication
-        // ============================================
-        
-        // Firebase configuration - REPLACE with your own config
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "aih-app.firebaseapp.com",
-            projectId: "aih-app",
-            storageBucket: "aih-app.appspot.com",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
-        
-        // Initialize Firebase (uncomment when config is set)
-        // const { initializeApp } = firebaseApps;
-        // const { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } = firebaseAuth;
-        
-        // For demo purposes, we'll use localStorage
-        const useDemoMode = true;
+        // Firebase Auth uses the config from the <head> section
         
         function openAuthModal(mode) {
             const modal = document.getElementById('authModal');
@@ -770,28 +770,6 @@
             }
         });
         
-        // Update form handlers to use demo mode
-        function loginWithEmail(event) {
-            event.preventDefault();
-            loginWithEmailDemo(event);
-        }
-        
-        function registerWithEmail(event) {
-            event.preventDefault();
-            registerWithEmailDemo(event);
-        }
-        
-        function loginWithGoogle() {
-            loginWithGoogleDemo();
-        }
-        
-        function registerWithGoogle() {
-            registerWithGoogleDemo();
-        }
-        
-        function logout() {
-            logoutDemo();
-        }
     </script>
 </body>
 </html>
