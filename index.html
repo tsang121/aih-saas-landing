@@ -639,16 +639,7 @@
         function updateAuthUI(user) {
             const navAuth = document.getElementById('navAuth');
             if (user) {
-                navAuth.innerHTML = '<span class="user-menu-name">' + (user.name || user.email.split('@')[0]) + '</span><button class="btn-auth-login" onclick="openAuthModal(\'dashboard\')">Dashboard</button><button class="btn-auth-login" onclick="handleLogout()">Log Out</button>';
-                // Show user dashboard if modal is open
-                const userDash = document.getElementById('userDashboard');
-                if (userDash && document.getElementById('authModal').classList.contains('show')) {
-                    document.getElementById('loginForm').style.display = 'none';
-                    document.getElementById('registerForm').style.display = 'none';
-                    userDash.style.display = 'block';
-                    document.getElementById('userName').textContent = user.name || user.email.split('@')[0];
-                    document.getElementById('userEmail').textContent = user.email;
-                }
+                navAuth.innerHTML = '<span class="user-menu-name">' + (user.name || user.email.split('@')[0]) + '</span><a href="dashboard.html" class="btn-auth-login">Dashboard</a><button class="btn-auth-login" onclick="handleLogout()">Log Out</button>';
             } else {
                 navAuth.innerHTML = '<button class="btn-auth-login" onclick="openAuthModal(\'login\')">Log In</button><button class="nav-cta" onclick="openAuthModal(\'register\')">Sign Up</button>';
                 localStorage.removeItem('aih_currentUser');
