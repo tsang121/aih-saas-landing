@@ -484,7 +484,7 @@
         </div>
     </nav>
     
-    <div class="dashboard-layout">
+    <div class="dashboard-layout" id="dashboardContent">
         <!-- Sidebar -->
         <aside class="dashboard-sidebar">
             <div class="sidebar-logo">🤖 <span>AIH</span></div>
@@ -726,42 +726,72 @@
         const auth = getAuth(app);
         
         // Check localStorage first (set by landing page)
-        function checkAuth() {
+        function checkLocalStorageAuth() {
             const savedUser = localStorage.getItem('aih_currentUser');
             if (savedUser) {
                 const user = JSON.parse(savedUser);
-                document.getElementById('userName').textContent = user.name || user.email.split('@')[0];
-                document.getElementById('userEmail').textContent = user.email;
-                document.getElementById('userAvatar').textContent = (user.name || user.email).substring(0, 2).toUpperCase();
-                return true;
+                if (user && user.email) {
+                    displayUserInfo(user);
+                    return true;
+                }
             }
             return false;
         }
         
-        // Check localStorage first
-        if (!checkAuth()) {
-            // If no localStorage user, check Firebase
+        function displayUserInfo(user) {
+            const name = user.name || user.email.split('@')[0];
+            const initial = name.substring(0, 2).toUpperCase();
+            
+            if (document.getElementById('userName')) {
+                document.getElementById('userName').textContent = name;
+            }
+            if (document.getElementById('userEmail')) {
+                document.getElementById('userEmail').textContent = user.email;
+            }
+            if (document.getElementById('userAvatar')) {
+                document.getElementById('userAvatar').textContent = initial;
+            }
+        }
+        
+        function showDashboard(user) {
+            // Hide login overlay, show dashboard
+            document.getElementById('dashboardContent').style.display = 'block';
+        }
+        
+        function showLogin() {
+            // Redirect to landing page
+            window.location.href = 'index.html';
+        }
+        
+        // Initial check - check localStorage first
+        const hasLocalUser = checkLocalStorageAuth();
+        
+        // If no local user, check Firebase
+        if (!hasLocalUser) {
             onAuthStateChanged(auth, (user) => {
-                if (!user) {
-                    window.location.href = 'index.html';
+                if (user) {
+                    displayUserInfo({
+                        name: user.displayName,
+                        email: user.email
+                    });
                 } else {
-                    document.getElementById('userName').textContent = user.displayName || user.email.split('@')[0];
-                    document.getElementById('userEmail').textContent = user.email;
-                    document.getElementById('userAvatar').textContent = (user.displayName || user.email).substring(0, 2).toUpperCase();
+                    // No Firebase user either, redirect to login
+                    showLogin();
                 }
             });
         }
         
         window.logout = function() {
+            localStorage.removeItem('aih_currentUser');
+            
             signOut(auth).then(() => {
-                localStorage.removeItem('aih_currentUser');
                 window.location.href = 'index.html';
             }).catch(() => {
-                // Even if Firebase signout fails, clear localStorage and redirect
-                localStorage.removeItem('aih_currentUser');
+                // Even if Firebase signout fails, redirect
                 window.location.href = 'index.html';
             });
         };
     </script>
+
 </body>
 </html>
