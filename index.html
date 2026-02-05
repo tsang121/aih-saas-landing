@@ -425,17 +425,21 @@
         </div>
     </section>
     
-    <!-- CTA -->
+    <!-- CTA / Get API Key -->
     <section class="cta" id="cta">
         <div class="container">
             <h2>Ready to Secure Your AI?</h2>
-            <p>Start protecting your AI assistant today.</p>
-            <form class="email-form" id="waitlistForm">
-                <input type="email" class="email-input" placeholder="Enter your email" required>
-                <button type="submit" class="btn-primary">Join Waitlist</button>
+            <p>Get your API key and start backing up today.</p>
+            <form class="email-form" id="apiKeyForm">
+                <input type="email" class="email-input" id="apiKeyEmail" placeholder="Enter your email" required>
+                <input type="text" class="email-input" id="apiKeyName" placeholder="Your name" style="max-width: 200px;" required>
+                <button type="submit" class="btn-primary">Get API Key →</button>
             </form>
-            <div class="form-success" id="formSuccess">
-                🎉 Thanks! You're on the list.
+            <div class="form-success" id="apiKeySuccess" style="display: none;">
+                <p>🎉 Your API Key:</p>
+                <code id="apiKeyDisplay" style="background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 8px; font-size: 14px; display: block; margin-top: 10px; word-break: break-all;"></code>
+                <p style="font-size: 12px; margin-top: 15px; opacity: 0.8;">Save this key! You'll need it to configure the CLI.</p>
+                <button class="btn-secondary" onclick="copyApiKey()" style="margin-top: 10px;">📋 Copy Key</button>
             </div>
         </div>
     </section>
@@ -704,6 +708,50 @@
         });
         
         document.getElementById('logoutBtn').addEventListener('click', handleLogout);
+        
+        // API Key Form Handler
+        document.getElementById('apiKeyForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const email = document.getElementById('apiKeyEmail').value;
+            const name = document.getElementById('apiKeyName').value;
+            const btn = this.querySelector('button');
+            
+            btn.textContent = 'Generating...';
+            btn.disabled = true;
+            
+            try {
+                const response = await fetch('https://aih-api-production.up.railway.app/api/keys', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, name })
+                });
+                
+                const data = await response.json();
+                
+                if (data.apiKey) {
+                    document.getElementById('apiKeyForm').style.display = 'none';
+                    document.getElementById('apiKeySuccess').style.display = 'block';
+                    document.getElementById('apiKeyDisplay').textContent = data.apiKey;
+                    
+                    // Store for dashboard
+                    localStorage.setItem('aih_apiKey', data.apiKey);
+                    localStorage.setItem('aih_userEmail', email);
+                } else {
+                    throw new Error(data.error || 'Failed to generate key');
+                }
+            } catch (error) {
+                btn.textContent = 'Get API Key →';
+                btn.disabled = false;
+                showNotification('Error: ' + error.message);
+            }
+        });
+        
+        function copyApiKey() {
+            const key = document.getElementById('apiKeyDisplay').textContent;
+            navigator.clipboard.writeText(key).then(() => {
+                showNotification('API Key copied!');
+            });
+        }
     </script>
 </body>
 </html>
