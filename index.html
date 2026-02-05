@@ -18,9 +18,93 @@
                 <li><a href="#pricing">Pricing</a></li>
                 <li><a href="#faq">FAQ</a></li>
             </ul>
-            <a href="#cta" class="nav-cta">Get Started</a>
+            <div class="nav-auth">
+                <button class="btn-auth-login" onclick="openAuthModal('login')">Log In</button>
+                <button class="nav-cta" onclick="openAuthModal('register')">Sign Up</button>
+            </div>
         </div>
     </nav>
+    
+    <!-- Auth Modal -->
+    <div class="auth-modal" id="authModal">
+        <div class="auth-modal-overlay" onclick="closeAuthModal()"></div>
+        <div class="auth-modal-content">
+            <button class="auth-modal-close" onclick="closeAuthModal()">×</button>
+            
+            <!-- Login Form -->
+            <div class="auth-form" id="loginForm">
+                <h2>Welcome Back</h2>
+                <p class="auth-subtitle">Log in to access your backups</p>
+                
+                <button class="btn-google" onclick="loginWithGoogle()">
+                    <svg viewBox="0 0 24 24" width="20" height="20"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                    Continue with Google
+                </button>
+                
+                <div class="auth-divider"><span>or</span></div>
+                
+                <form onsubmit="loginWithEmail(event)">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="loginEmail" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="loginPassword" placeholder="Enter password" required>
+                    </div>
+                    <button type="submit" class="btn-primary btn-full">Log In</button>
+                </form>
+                
+                <p class="auth-switch">Don't have an account? <a href="#" onclick="switchToRegister()">Sign up</a></p>
+            </div>
+            
+            <!-- Register Form -->
+            <div class="auth-form" id="registerForm" style="display: none;">
+                <h2>Create Account</h2>
+                <p class="auth-subtitle">Start securing your AI assistant today</p>
+                
+                <button class="btn-google" onclick="registerWithGoogle()">
+                    <svg viewBox="0 0 24 24" width="20" height="20"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                    Sign up with Google
+                </button>
+                
+                <div class="auth-divider"><span>or</span></div>
+                
+                <form onsubmit="registerWithEmail(event)">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="registerName" placeholder="Your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="registerEmail" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="registerPassword" placeholder="Create password" minlength="6" required>
+                    </div>
+                    <button type="submit" class="btn-primary btn-full">Create Account</button>
+                </form>
+                
+                <p class="auth-switch">Already have an account? <a href="#" onclick="switchToLogin()">Log in</a></p>
+            </div>
+            
+            <!-- User Dashboard Link (shown when logged in) -->
+            <div class="auth-form" id="userDashboard" style="display: none;">
+                <div class="user-dashboard-welcome">
+                    <div class="user-avatar-large">👋</div>
+                    <h2>Welcome, <span id="userName"></span>!</h2>
+                    <p class="auth-subtitle" id="userEmail"></p>
+                </div>
+                <div class="user-dashboard-actions">
+                    <a href="https://aih-openclaw-backup-production.up.railway.app" class="btn-primary btn-full" target="_blank">
+                        🎯 Go to Dashboard
+                    </a>
+                    <button class="btn-secondary btn-full" onclick="logout()">Log Out</button>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <!-- Hero Section -->
     <section class="hero" id="hero">
@@ -493,6 +577,220 @@
             if (!wasActive) {
                 faqItem.classList.add('active');
             }
+        }
+        
+        // ============================================
+        // Firebase Authentication
+        // ============================================
+        
+        // Firebase configuration - REPLACE with your own config
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "aih-app.firebaseapp.com",
+            projectId: "aih-app",
+            storageBucket: "aih-app.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+        
+        // Initialize Firebase (uncomment when config is set)
+        // const { initializeApp } = firebaseApps;
+        // const { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } = firebaseAuth;
+        
+        // For demo purposes, we'll use localStorage
+        const useDemoMode = true;
+        
+        function openAuthModal(mode) {
+            const modal = document.getElementById('authModal');
+            modal.classList.add('show');
+            
+            if (mode === 'login') {
+                showLoginForm();
+            } else {
+                showRegisterForm();
+            }
+        }
+        
+        function closeAuthModal() {
+            const modal = document.getElementById('authModal');
+            modal.classList.remove('show');
+        }
+        
+        function showLoginForm() {
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('userDashboard').style.display = 'none';
+        }
+        
+        function showRegisterForm() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'block';
+            document.getElementById('userDashboard').style.display = 'none';
+        }
+        
+        function showUserDashboard(user) {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('userDashboard').style.display = 'block';
+            
+            document.getElementById('userName').textContent = user.name || user.email.split('@')[0];
+            document.getElementById('userEmail').textContent = user.email;
+        }
+        
+        function switchToRegister() {
+            showRegisterForm();
+        }
+        
+        function switchToLogin() {
+            showLoginForm();
+        }
+        
+        // Demo mode authentication
+        function loginWithEmailDemo(event) {
+            event.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            // Check stored users
+            const users = JSON.parse(localStorage.getItem('aih_users') || '{}');
+            
+            if (users[email] && users[email].password === password) {
+                localStorage.setItem('aih_currentUser', JSON.stringify(users[email]));
+                closeAuthModal();
+                updateAuthUI(users[email]);
+                showNotification('Welcome back!', 'success');
+            } else {
+                showNotification('Invalid email or password', 'error');
+            }
+        }
+        
+        function registerWithEmailDemo(event) {
+            event.preventDefault();
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            
+            const users = JSON.parse(localStorage.getItem('aih_users') || '{}');
+            
+            if (users[email]) {
+                showNotification('Email already registered', 'error');
+                return;
+            }
+            
+            const user = { name, email, password, createdAt: new Date().toISOString() };
+            users[email] = user;
+            localStorage.setItem('aih_users', JSON.stringify(users));
+            localStorage.setItem('aih_currentUser', JSON.stringify(user));
+            
+            closeAuthModal();
+            updateAuthUI(user);
+            showNotification('Account created successfully!', 'success');
+        }
+        
+        function loginWithGoogleDemo() {
+            // Simulate Google login
+            const demoUser = {
+                name: 'Google User',
+                email: 'user@gmail.com',
+                provider: 'google'
+            };
+            localStorage.setItem('aih_currentUser', JSON.stringify(demoUser));
+            closeAuthModal();
+            updateAuthUI(demoUser);
+            showNotification('Logged in with Google!', 'success');
+        }
+        
+        function registerWithGoogleDemo() {
+            // Simulate Google signup
+            const demoUser = {
+                name: 'New Google User',
+                email: 'newuser@gmail.com',
+                provider: 'google'
+            };
+            localStorage.setItem('aih_currentUser', JSON.stringify(demoUser));
+            closeAuthModal();
+            updateAuthUI(demoUser);
+            showNotification('Account created with Google!', 'success');
+        }
+        
+        function logoutDemo() {
+            localStorage.removeItem('aih_currentUser');
+            updateAuthUI(null);
+            showNotification('Logged out successfully', 'success');
+        }
+        
+        function updateAuthUI(user) {
+            const navAuth = document.querySelector('.nav-auth');
+            const navCta = document.querySelector('.nav-cta');
+            
+            if (user) {
+                navAuth.innerHTML = `
+                    <div class="user-menu">
+                        <span class="user-menu-name">${user.name || user.email.split('@')[0]}</span>
+                        <button class="btn-auth-login" onclick="openAuthModal('dashboard')">Dashboard</button>
+                        <button class="btn-auth-login" onclick="logout()">Log Out</button>
+                    </div>
+                `;
+            }
+        }
+        
+        function showNotification(message, type) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 24px;
+                right: 24px;
+                padding: 16px 24px;
+                background: ${type === 'success' ? 'var(--primary)' : '#ef4444'};
+                color: white;
+                border-radius: 12px;
+                font-weight: 600;
+                z-index: 3000;
+                animation: slideIn 0.3s ease;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateY(20px)';
+                notification.style.transition = 'all 0.3s';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+        
+        // Check for existing session on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentUser = localStorage.getItem('aih_currentUser');
+            if (currentUser) {
+                updateAuthUI(JSON.parse(currentUser));
+            }
+        });
+        
+        // Update form handlers to use demo mode
+        function loginWithEmail(event) {
+            event.preventDefault();
+            loginWithEmailDemo(event);
+        }
+        
+        function registerWithEmail(event) {
+            event.preventDefault();
+            registerWithEmailDemo(event);
+        }
+        
+        function loginWithGoogle() {
+            loginWithGoogleDemo();
+        }
+        
+        function registerWithGoogle() {
+            registerWithGoogleDemo();
+        }
+        
+        function logout() {
+            logoutDemo();
         }
     </script>
 </body>
