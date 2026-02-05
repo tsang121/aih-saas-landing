@@ -1,0 +1,16 @@
+{
+  "name": "aih-saas-landing",
+  "version": "1.0.0",
+  "description": "AIH SaaS Landing Page",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve . -p 3000",
+    "dev": "python3 -m http.server 8000"
+  },
+  "dependencies": {
+    "serve": "^14.2.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
